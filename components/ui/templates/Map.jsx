@@ -17,116 +17,114 @@ const Map = () => {
   const handleMapLoad = useCallback(() => {
     const map = mapInstanceRef.current;
 
-    map.loadImage('/marker2.png', (error, image) => {
-      if (error) throw error;
-      if (!map.hasImage('custom-marker')) {
-        map.addImage('custom-marker', image);
-      }
+    // map.loadImage('/marker2.png', (error, image) => {
+    //   if (error) throw error;
+    //   if (!map.hasImage('custom-marker')) {
+    //     map.addImage('custom-marker', image);
+    //   }
 
-      const geojson = {
-        type: 'FeatureCollection',
-        features: Array.from({ length: 20 }).map((_, i) => ({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [userLngLtg[0] + i * 0.001, userLngLtg[1] + i * 0.001],
-          },
-          properties: {
-            title: `ゴルフガイド ${i + 1}`,
-          },
-        })),
-      };
+    //   const geojson = {
+    //     type: 'FeatureCollection',
+    //     features: Array.from({ length: 20 }).map((_, i) => ({
+    //       type: 'Feature',
+    //       geometry: {
+    //         type: 'Point',
+    //         coordinates: [userLngLtg[0] + i * 0.001, userLngLtg[1] + i * 0.001],
+    //       },
+    //       properties: {
+    //         title: `ゴルフガイド ${i + 1}`,
+    //       },
+    //     })),
+    //   };
+    //   setTimeout(() => {
+    //     if (!map.getSource('markers')) {
+    //       map.addSource('markers', {
+    //         type: 'geojson',
+    //         data: geojson,
+    //         cluster: false,
+    //       });
+    //     }
 
-      // 비동기적으로 마커 소스 추가
-      setTimeout(() => {
-        if (!map.getSource('markers')) {
-          map.addSource('markers', {
-            type: 'geojson',
-            data: geojson,
-            cluster: false,
-          });
-        }
+    //     if (!map.getLayer('markers')) {
+    //       map.addLayer({
+    //         id: 'markers',
+    //         type: 'symbol',
+    //         source: 'markers',
+    //         layout: {
+    //           'icon-image': 'custom-marker',
+    //           'icon-allow-overlap': true,
+    //           'text-allow-overlap': true,
+    //           'text-variable-anchor': ['left', 'right', 'top'],
+    //           'text-radial-offset': 0.5,
+    //           'text-justify': 'auto',
+    //           'icon-size': 0.8,
+    //           'text-field': ['get', 'title'],
+    //           'text-offset': [0, 1.5],
+    //           'text-size': 12,
+    //         },
+    //         paint: {
+    //           'text-color': '#000000',
+    //           'text-halo-color': '#ffffff',
+    //           'text-halo-width': 1,
+    //           'text-halo-blur': 1,
+    //         },
+    //       });
+    //     }
+    //   }, 0); // 비동기적으로 작업을 분리
+    // });
 
-        if (!map.getLayer('markers')) {
-          map.addLayer({
-            id: 'markers',
-            type: 'symbol',
-            source: 'markers',
-            layout: {
-              'icon-image': 'custom-marker',
-              'icon-allow-overlap': true,
-              'text-allow-overlap': true,
-              'text-variable-anchor': ['left', 'right', 'top'],
-              'text-radial-offset': 0.5,
-              'text-justify': 'auto',
-              'icon-size': 0.8,
-              'text-field': ['get', 'title'],
-              'text-offset': [0, 1.5],
-              'text-size': 12,
-            },
-            paint: {
-              'text-color': '#000000',
-              'text-halo-color': '#ffffff',
-              'text-halo-width': 1,
-              'text-halo-blur': 1,
-            },
-          });
-        }
-      }, 0); // 비동기적으로 작업을 분리
-    });
+    // map.on('mouseenter', 'markers', (e) => {
+    //   isHoveringMarker.current = true;
+    //   const coordinates = e.features[0].geometry.coordinates.slice();
+    //   const title = e.features[0].properties.title;
 
-    map.on('mouseenter', 'markers', (e) => {
-      isHoveringMarker.current = true;
-      const coordinates = e.features[0].geometry.coordinates.slice();
-      const title = e.features[0].properties.title;
+    //   if (popupRef.current) {
+    //     popupRef.current.remove();
+    //   }
+    //   const popupContainer = document.createElement('div');
+    //   const root = createRoot(popupContainer);
+    //   root.render(popupcontent(title));
+    //   const popup = new mapboxgl.Popup({
+    //     closeButton: false,
+    //     closeOnClick: true,
+    //   })
+    //     .setLngLat(coordinates)
+    //     .setDOMContent(popupContainer)
+    //     .addTo(map);
 
-      if (popupRef.current) {
-        popupRef.current.remove();
-      }
-      const popupContainer = document.createElement('div');
-      const root = createRoot(popupContainer);
-      root.render(popupcontent(title));
-      const popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: true,
-      })
-        .setLngLat(coordinates)
-        .setDOMContent(popupContainer)
-        .addTo(map);
+    //   popupRef.current = popup;
+    //   const popupElement = popup.getElement();
+    //   if (popupElement) {
+    //     popupElement.addEventListener('mouseenter', handleMouseEnter);
+    //     popupElement.addEventListener('mouseleave', handleMouseLeave);
+    //   }
 
-      popupRef.current = popup;
-      const popupElement = popup.getElement();
-      if (popupElement) {
-        popupElement.addEventListener('mouseenter', handleMouseEnter);
-        popupElement.addEventListener('mouseleave', handleMouseLeave);
-      }
+    //   const markerElement = e.target._element;
+    //   if (markerElement) {
+    //     markerElement.addEventListener('mouseenter', handleMarkerMouseEnter);
+    //     markerElement.addEventListener('mouseleave', handleMarkerMouseLeave);
+    //   }
+    // });
+    // map.on('mouseleave', 'markers', () => {
+    //   isHoveringMarker.current = false;
+    //   handleMouseLeave();
+    // });
+    // map.on('mouseenter', 'markers', () => {
+    //   map.getCanvas().style.cursor = 'pointer';
+    // });
 
-      const markerElement = e.target._element;
-      if (markerElement) {
-        markerElement.addEventListener('mouseenter', handleMarkerMouseEnter);
-        markerElement.addEventListener('mouseleave', handleMarkerMouseLeave);
-      }
-    });
-    map.on('mouseleave', 'markers', () => {
-      isHoveringMarker.current = false;
-      handleMouseLeave();
-    });
-    map.on('mouseenter', 'markers', () => {
-      map.getCanvas().style.cursor = 'pointer';
-    });
+    // map.on('mouseleave', 'markers', () => {
+    //   map.getCanvas().style.cursor = '';
+    // });
 
-    map.on('mouseleave', 'markers', () => {
-      map.getCanvas().style.cursor = '';
-    });
+    // map.on('click', (e) => {
+    //   const features = map.queryRenderedFeatures(e.point, { layers: ['markers'] });
 
-    map.on('click', (e) => {
-      const features = map.queryRenderedFeatures(e.point, { layers: ['markers'] });
-
-      if (!features.length && !isHoveringPopup.current && popupRef.current) {
-        popupRef.current.remove();
-        popupRef.current = null;
-      }
-    });
+    //   if (!features.length && !isHoveringPopup.current && popupRef.current) {
+    //     popupRef.current.remove();
+    //     popupRef.current = null;
+    //   }
+    // });
   }, []);
 
   useEffect(() => {
