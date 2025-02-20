@@ -16,15 +16,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.marker {
-  background-image: url('/marker2.png');
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
+.marker-label {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--foreground);
+  text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, 
+                -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
 }
-
-.mapboxgl-popup {
-  max-width: 200px;
-} 
