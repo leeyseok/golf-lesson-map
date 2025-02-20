@@ -8,11 +8,11 @@ const MapComponent = () => {
   useEffect(() => {
     const initMap = async () => {
       const loader = new Loader({
-        apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY!, // ✅ 클라이언트 환경 변수 사용
+        apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY!,
         version: 'weekly',
       });
 
-      await loader.load(); // ✅ 로드 완료 후 google 객체 사용 가능
+      await loader.load();
       
       if (!mapRef.current || !window.google) return;
 
@@ -25,6 +25,7 @@ const MapComponent = () => {
       };
 
       const map = new window.google.maps.Map(mapRef.current, mapOptions);
+      console.log(map)
     };
 
     initMap();
