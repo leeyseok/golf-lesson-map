@@ -17,9 +17,12 @@ body {
 }
 
 .marker-label {
-  font-size: 1.5rem;
+  font-size: 0.75rem;
   font-weight: bold;
   color: var(--foreground);
   text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, 
                 -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+  position: absolute;
+  transform: translatex(-25%);
+  white-space: nowrap;
 }
